@@ -8,13 +8,18 @@
 </head>
 
 <body>
-	
-<?php
-$text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius illum porro eaque vero ipsam quis architecto eveniet provident animi nobis incidunt quam? accusantium culpa delectus quod, itaque facilis autem cum.";
-$pattern="/quam?/i";
 
+	<?php
+$text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius illum porro eaque vero ipsam quis architecto eveniet provident ill  animi nobis incidunt quam? accusantium culpa delectus quod, itaque facilis autem ill cum. [1]";
+$pattern="/cum/i"; // possible  regExp Modifiers
+$pattern1="/[0-9]/i";
+// it mathes only first result
 echo preg_match($pattern,$text);
+// it mathes all the  results in text
+echo preg_match_all($pattern1,$text);
+// preg_replace 
 
+ echo preg_replace($pattern,"----" ,$text);
 ?>
 </body>
 
