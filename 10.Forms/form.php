@@ -25,7 +25,7 @@ else 	 echo " <br> successfull";
 	// $result = ($check) ? "<br>Db is create succesfully" : "<br>Db cannot be created Sorry!" ;
 	// echo $result;
     // create a new table
-	$sql = "CREATE TABLE `student_results` (`s_id` INT(40) NOT NULL AUTO_INCREMENT , `first_name` VARCHAR(40) NOT NULL , `last_name` VARCHAR(40) NOT NULL , `email` VARCHAR(35) NOT NULL , PRIMARY KEY (`s_id`)) ENGINE = InnoDB;";
+	$sql = "CREATE TABLE `student_results` (`s_id` INT(40) NOT NULL AUTO_INCREMENT , `first_name` VARCHAR(40) NOT NULL , `last_name` VARCHAR(40) NOT NULL , `email` VARCHAR(35) NOT NULL ,`date_of_birth` DATE NOT NULL ,PRIMARY KEY (`s_id`)) ENGINE = InnoDB;";
     $result =mysqli_query($conn ,$sql);
 if ($result) {
 	echo "created";
@@ -36,11 +36,14 @@ if ($result) {
  // Get data throught the form
 $first_name=$_POST["First_Name"];
 $last_name=$_POST["Last_Name"];
+$dob=$_POST["date_of_birth"];
 
    // insert Data into db
-   $inset_query="INSERT INTO `student_results` ( `first_name`, `last_name`, `email`) VALUES ( '$first_name', ' $last_name ', 'hussanali@gmail.com'); ";
+   $inset_query="INSERT INTO `student_results` ( `first_name`, `last_name`, `email`, `date_of_birth`) VALUES ( '$first_name', '$last_name', 'start@gmail.com', '$dob');";
+
+   
    if (mysqli_query($conn,$inset_query)) {
-	echo "<br>Data Added into the table";
+echo "alert('Form is successfully submited')";
 } else {
 	echo "<br>data not added into the table";
 }
