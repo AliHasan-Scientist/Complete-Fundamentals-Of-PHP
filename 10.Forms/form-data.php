@@ -20,7 +20,7 @@ table{
   font-size: 11pt; 
   font-style: normal;
   font-weight: bold;
-  text-align:; 
+  text-align:center; 
   background-color: SlateBlue; 
   border-collapse: collapse; 
   border: 2px solid navy
