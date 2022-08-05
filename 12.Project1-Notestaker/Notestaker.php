@@ -8,59 +8,60 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 	<link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
 </head>
 
 <body>
-	<!-- Edit Modal opern here -->
-	<!-- Button trigger modal -->
-	<!-- Button trigger modal -->
-	<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-		<form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
-				<label for="Note_Title" class="form-label">Note Title</label>
-				<input type="text" class="form-control" id="Note_Title_Edit" placeholder="Enter title here"
-					name="Note_Title">
-		</div>
-		<div class="mb-3">
-			<label for="Note_Description" class="form-label">Note Description</label>
-			<textarea class="form-control" id="Note_Description_Edit" rows="4" name="Note_Description"></textarea>
-			<button type="submit" class="btn btn-primary my-2" name="save_notes">Add Note</button>
-			</form>
-		</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-	  <!-- update recor -->
-	  <?php
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModal">Modal title</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
+							<input type="hidden" name="snoEdit" id="snoEdit">
+							<label for="Note_Title" class="form-label">Note
+								Title</label>
+							<input type="text" class="form-control" id="Note_Title_Edit" placeholder="Enter title here"
+								name="Note_Title_Edit">
+					</div>
+					<div class="mb-3">
+						<label for="Note_Description" class="form-label">Note Description</label>
+						<textarea class="form-control" id="Note_Description_Edit" rows="4"
+							name="Note_Description_Edit"></textarea>
+						<button type="submit" class="btn btn-primary my-2" name="save_notes_edit">Update Note</button>
+						</form>
+						<!-- update Record -->
+						<?php
   $notes_inserted_check=false;
-if (isset($_POST['save_notes'])) {
+if (isset($_POST['save_notes_edit'])) {
   include('db_connection.php');
   $notes_title=$_POST["Note_Title_Edit"];
   $notes_description=$_POST["Note_Description_Edit"];
- $add_notes_data="UPDATE `notes_data` SET `notes_tilte` = '$notes_title', `notes_description` = '$notes_description' WHERE `notes_data`.`notes_Id` = 3; ";
-$notes_inserted=mysqli_query($conn,$add_notes_data);
-$notes_inserted_check = ($notes_inserted) ? true : "note insertion error";
+  $notes_id=$_POST["snoEdit"];
+
+ $add_notes_data="UPDATE `notes_data` SET `notes_tilte` = '$notes_title', `notes_description` = '$notes_description' WHERE `notes_data`.`notes_Id` = '$notes_id'; ";
+$notes_update=mysqli_query($conn,$add_notes_data);
+$notes_update_check = ($notes_update) ? true : "note insertion error";
+echo $notes_update_check;
 }
 
 ?>
-    </div>
-  </div>
-</div>
+
+					</div>
+		</div>
+
+
+			</div>
+		</div>
+	</div>
 
 
 
@@ -178,7 +179,7 @@ while ($rows = mysqli_fetch_assoc($founded_notes_data)) {
   <td>".$rows['notes_description']."</td>
   <td>
   <div class='d-grid gap-2 '>
-  <button type='button' class='edit btn btn-sm btn-primary'>Edit</button>
+  <button type='button'id='".$rows['notes_Id']."' class='edit btn btn-sm btn-primary'>Edit</button>
   <button type='button' class='delete btn btn-sm btn-primary'>Delete</button>
 </div>
 </td>
@@ -201,7 +202,6 @@ while ($rows = mysqli_fetch_assoc($founded_notes_data)) {
 		</div>
 	</div>
 
-
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -210,7 +210,11 @@ while ($rows = mysqli_fetch_assoc($founded_notes_data)) {
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
 	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+	</script>
 	<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
 	<script>
 	$(document).ready(function() {
 		$('#myTable').DataTable();
@@ -225,6 +229,12 @@ while ($rows = mysqli_fetch_assoc($founded_notes_data)) {
 			title = tr.getElementsByTagName("td")[0].innerText;
 			description = tr.getElementsByTagName("td")[1].innerText;
 			console.log(title);
+			Note_Title_Edit.value = title;
+			Note_Description_Edit.value = description;
+			snoEdit.value = e.target.id;
+			$('#myModal').modal('toggle')
+			console.log(e.target.id);
+
 		})
 	});
 	</script>
@@ -233,6 +243,10 @@ while ($rows = mysqli_fetch_assoc($founded_notes_data)) {
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
 		integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous">
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
 	</script>
 
 </body>
