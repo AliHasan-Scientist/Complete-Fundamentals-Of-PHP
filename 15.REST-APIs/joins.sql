@@ -29,3 +29,4 @@ INSERT INTO students
  `password`,
  `results`)
 VALUES ('Ali Hasan' , 'Mubarak Ali ' ,'royalihasan@gmail.com','test123','1');
+SELECT * FROM students s INNER JOIN student_result sr on s.`s_Id` = sr.`res_Id`;
