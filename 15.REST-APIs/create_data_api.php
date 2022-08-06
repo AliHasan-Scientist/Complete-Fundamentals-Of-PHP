@@ -27,4 +27,4 @@ if ($inserted_notes_data) {
 	echo json_encode(array('message'=>"record not inserted successfully","staus"=>false));
 
 }
-?>
+
